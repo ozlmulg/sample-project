@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  sample-db:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - ./tmp/data:/var/lib/postgresql/data
+      - ./target/:/var/data
+    ports:
+      - "5435:5432"

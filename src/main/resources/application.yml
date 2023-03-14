@@ -1,0 +1,42 @@
+micronaut:
+  application:
+    name: sample
+  server:
+    port: ${prop.micronaut.server.port:8080}
+netty:
+  default:
+    allocator:
+      max-order: 3
+
+logger:
+  levels:
+    org.jooq.tools.LoggerListener: ${prop.logger.levels.org.jooq.tools.LoggerListener:OFF}
+
+r2dbc:
+  datasources:
+    sample-db-r2dbc:
+      options:
+        driver: pool
+        protocol: postgresql
+        initialSize: 5
+        maxSize: ${prop.datasources.sample.db.max-size:5}
+        maxLifeTime: P365D
+      url: r2dbc:pool:postgresql://${prop.datasources.sample.db.host}:${prop.datasources.sample.db.port:5432}/sample
+      username: ${prop.datasources.sample.db.username}
+      password: ${prop.datasources.sample.db.password}
+      ssl: ${prop.datasources.sample.db.use-ssl:true}
+
+datasources:
+  sample-db-jdbc:
+    url: jdbc:postgresql://${prop.datasources.sample.db.host}:${prop.datasources.sample.db.port:5432}/sample
+    username: ${prop.datasources.sample.db.username}
+    password: ${prop.datasources.sample.db.password}
+    ssl: ${prop.datasources.sample.db.use-ssl:true}
+
+jooq:
+  r2dbc-datasources:
+    sample-db-r2dbc:
+      sql-dialect: postgres
+  datasources:
+    sample-db-jdbc:
+      sql-dialect: postgres
