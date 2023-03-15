@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: sample-test
+  server:
+    port: ${prop.micronaut.server.port:8080}

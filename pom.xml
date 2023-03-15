@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>sample</artifactId>
+  <version>0.1</version>
+  <packaging>${packaging}</packaging>
+
+  <parent>
+    <groupId>io.micronaut</groupId>
+    <artifactId>micronaut-parent</artifactId>
+    <version>3.8.5</version>
+  </parent>
+
+  <properties>
+    <packaging>jar</packaging>
+    <jdk.version>11</jdk.version>
+    <release.version>11</release.version>
+    <micronaut.runtime>netty</micronaut.runtime>
+    <jooq.version>3.18.0</jooq.version>
+    <testcontainers.version>1.17.1</testcontainers.version>
+    <postgresql.version>42.3.6</postgresql.version>
+    <junit4.version>4.13.2</junit4.version>
+    <micronaut-r2dbc.version>2.1.0</micronaut-r2dbc.version>
+    <r2dbc-h2.version>0.9.1.RELEASE</r2dbc-h2.version>
+    <r2dbc-spi.version>0.9.1.RELEASE</r2dbc-spi.version>
+    <r2dbc-postgresql.version>0.9.1.RELEASE</r2dbc-postgresql.version>
+    <r2dbc-pool.version>0.9.0.RELEASE</r2dbc-pool.version>
+    <exec.mainClass>com.example.sample.Application</exec.mainClass>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-inject</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-http-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-http-server-netty</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.reactor</groupId>
+      <artifactId>micronaut-reactor</artifactId>
+    </dependency>
+
+    <!-- jdbc -->
+    <dependency>
+      <groupId>io.micronaut.sql</groupId>
+      <artifactId>micronaut-jooq</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq</artifactId>
+      <version>${jooq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.sql</groupId>
+      <artifactId>micronaut-jdbc-hikari</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- r2dbc -->
+    <dependency>
+      <groupId>io.micronaut.r2dbc</groupId>
+      <artifactId>micronaut-r2dbc-core</artifactId>
+      <version>${micronaut-r2dbc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.r2dbc</groupId>
+      <artifactId>r2dbc-h2</artifactId>
+      <version>${r2dbc-h2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.r2dbc</groupId>
+      <artifactId>r2dbc-spi</artifactId>
+      <version>${r2dbc-spi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>r2dbc-postgresql</artifactId>
+      <version>${r2dbc-postgresql.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.r2dbc</groupId>
+      <artifactId>r2dbc-pool</artifactId>
+      <version>${r2dbc-pool.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- test -->
+    <dependency>
+      <groupId>io.micronaut.test</groupId>
+      <artifactId>micronaut-test-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.micronaut.build</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <!-- Uncomment to enable incremental compilation -->
+          <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
+
+          <annotationProcessorPaths combine.children="append">
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-http-validation</artifactId>
+              <version>${project.parent.version}</version>
+            </path>
+          </annotationProcessorPaths>
+          <compilerArgs>
+            <arg>-Amicronaut.processing.group=${project.groupId}</arg>
+            <arg>-Amicronaut.processing.module=${project.artifactId}</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>jooq-codegen</id>
+      <activation>
+        <property>
+          <name>jooq-codegen</name>
+        </property>
+      </activation>
+      <properties>
+        <jooq-generator>org.jooq.codegen.JavaGenerator</jooq-generator>
+        <jooq-strategy>org.jooq.codegen.DefaultGeneratorStrategy</jooq-strategy>
+        <jooq-var-java-mime-types>true</jooq-var-java-mime-types>
+        <jooq-database-postgre-name>org.jooq.meta.postgres.PostgresDatabase</jooq-database-postgre-name>
+        <jooq-database-name>${jooq-database-postgre-name}</jooq-database-name>
+        <jooq-driver-parameters>TC_INITSCRIPT=file:${jooq-sql-intermediate-file}</jooq-driver-parameters>
+        <jooq-entity-base-package>com.example</jooq-entity-base-package>
+        <jooq-entity-sub-package>sample</jooq-entity-sub-package>
+        <jooq-entity-package>${jooq-entity-base-package}.${jooq-entity-sub-package}.entity</jooq-entity-package>
+        <jooq-postgresql-version>13.3</jooq-postgresql-version>
+        <jooq-schema-postgre>public</jooq-schema-postgre>
+        <jooq-schema>${jooq-schema-postgre}</jooq-schema>
+        <jooq.sql-filenames>*.sql</jooq.sql-filenames>
+        <jooq-sql-file-directory>${project.basedir}/src/main/resources/db/sql/</jooq-sql-file-directory>
+        <jooq-sql-intermediate-file>${project.build.outputDirectory}/sql/jooq.sql</jooq-sql-intermediate-file>
+        <jooq-sql-url-postgre>jdbc:tc:postgresql:${jooq-postgresql-version}:///database?${jooq-driver-parameters}
+        </jooq-sql-url-postgre>
+        <jooq-sql-url>${jooq-sql-url-postgre}</jooq-sql-url>
+      </properties>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.mike10004</groupId>
+            <artifactId>concatenate-maven-plugin</artifactId>
+            <version>0.4</version>
+            <executions>
+              <execution>
+                <id>concatenate-css-files</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>cat</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <fileset>
+                      <directory>${jooq-sql-file-directory}</directory>
+                      <orderingStrategy>strict</orderingStrategy>
+                      <sort>none</sort>
+                      <includes>
+                        <include>${jooq.sql-filenames}</include>
+                      </includes>
+                    </fileset>
+                  </sources>
+                  <outputFile>${jooq-sql-intermediate-file}</outputFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen-maven</artifactId>
+            <version>${jooq.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <dependencies>
+              <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainers.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${testcontainers.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit4.version}</version>
+              </dependency>
+            </dependencies>
+
+            <configuration>
+              <jdbc>
+                <driver>org.testcontainers.jdbc.ContainerDatabaseDriver</driver>
+                <url>${jooq-sql-url}</url>
+              </jdbc>
+
+              <generator>
+                <name>${jooq-generator}</name>
+
+                <strategy>
+                  <name>${jooq-strategy}</name>
+                </strategy>
+
+                <database>
+                  <name>${jooq-database-name}</name>
+                  <includes>.*</includes>
+                  <excludes/>
+                  <schemata>
+                    <schema>
+                      <inputSchema>${jooq-schema}</inputSchema>
+                      <outputSchemaToDefault>true</outputSchemaToDefault>
+                    </schema>
+                  </schemata>
+                </database>
+
+                <generate>
+                  <daos>false</daos>
+                  <generatedAnnotation>false</generatedAnnotation>
+                  <globalCatalogReferences>true</globalCatalogReferences>
+                  <globalSchemaReferences>true</globalSchemaReferences>
+                  <indexes>true</indexes>
+                  <javaTimeTypes>${jooq-var-java-mime-types}</javaTimeTypes>
+                  <jooqVersionReference>false</jooqVersionReference>
+                  <jpaAnnotations>false</jpaAnnotations>
+                  <pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>
+                  <pojos>true</pojos>
+                  <pojosToString>true</pojosToString>
+                  <records>true</records>
+                  <relations>true</relations>
+                  <serializablePojos>true</serializablePojos>
+                  <tables>true</tables>
+                </generate>
+
+                <target>
+                  <directory>${project.build.sourceDirectory}</directory>
+                  <packageName>${jooq-entity-package}</packageName>
+                </target>
+
+              </generator>
+              <logging>INFO</logging>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
