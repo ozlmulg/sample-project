@@ -6,9 +6,9 @@ This will clean and force update dependencies
 
     mvn clean install -U
 
-to build: in the project root, run `make main-build`
+to build: in the project root, run `make mvn-build`
 
-to run: in the project root, run `make main-run`
+to run: in the project root, run `make mvn-run`
 
 ### Local DB Setup
 
